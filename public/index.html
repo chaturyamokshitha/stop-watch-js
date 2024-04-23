@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>stop watch</title>
+    <link rel="stylesheet" href="output.css">
+</head>
+<body class="bg-pink-800">
+    <div class="flex items-center justify-center mt-56 ">
+   <div class="p-8 bg-pink-300 rounded-md">
+    <h1 class="italic font-bold">Stop Watch --------</h1>
+    <h1 id="watch" class="p-4 text-2xl text-center">00:00:00</h1>
+    <button id="pause" class="p-2 ml-2" ><i class="fa-solid fa-pause fa-xl" style="color: #fafcff;"></i></button>
+    <button id="play" class="pb-4 pl-4 pr-4"><i class="fa-solid fa-play fa-2xl" style="color: #ffffff;"></i></button>
+    <button id="reset" class="p-2"><i class="fa-solid fa-reply fa-xl" style="color: #f9fafa;"></i></button>
+   </div> 
+</div>
+<script src="https://kit.fontawesome.com/9f5026aa16.js" crossorigin="anonymous"></script>
+
+   <script>
+const watch=document.getElementById("watch");
+    const pause = document.getElementById("pause");
+    const play = document.getElementById("play");
+    const reset = document.getElementById("reset");
+     let [hours, minutes, seconds] = [0, 0, 0];
+function startwatch(){
+   
+ seconds++;
+    if(seconds == 60)
+    {
+        seconds=0;
+        minutes++;
+    }
+    if(minutes==60)
+    {
+        minutes=0;
+        hours++;
+    }
+ let h=hours>=10?hours: "0"+hours;
+  let m = minutes >= 10 ? minutes : "0" + minutes;
+   let s = seconds >= 10 ? seconds : "0" + seconds;
+    watch.innerHTML=h+":"+m+":"+s;
+}
+    let intervalId; // Declare a variable to store the interval ID
+
+    play.addEventListener("click", () => {
+       
+        intervalId = setInterval(() => {
+            startwatch();
+        }, 1000);
+    });
+
+    pause.addEventListener("click", () => {
+        clearInterval(intervalId);
+    });
+    reset.addEventListener("click",()=>{
+        clearInterval(intervalId);
+        seconds=0;
+        minutes=0;
+        hours=0;
+        watch.innerHTML = "00" + ":" + "00" + ":" + "00";
+    })
+
+
+   </script>
+</body>
+</html>
