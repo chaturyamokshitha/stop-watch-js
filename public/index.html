@@ -19,50 +19,49 @@
 <script src="https://kit.fontawesome.com/9f5026aa16.js" crossorigin="anonymous"></script>
 
    <script>
-const watch=document.getElementById("watch");
-    const pause = document.getElementById("pause");
-    const play = document.getElementById("play");
-    const reset = document.getElementById("reset");
-     let [hours, minutes, seconds] = [0, 0, 0];
-function startwatch(){
-   
- seconds++;
-    if(seconds == 60)
-    {
-        seconds=0;
-        minutes++;
-    }
-    if(minutes==60)
-    {
-        minutes=0;
-        hours++;
-    }
- let h=hours>=10?hours: "0"+hours;
-  let m = minutes >= 10 ? minutes : "0" + minutes;
-   let s = seconds >= 10 ? seconds : "0" + seconds;
-    watch.innerHTML=h+":"+m+":"+s;
-}
-    let intervalId; // Declare a variable to store the interval ID
+        const watch = document.getElementById("watch");
+        const pause = document.getElementById("pause");
+        const play = document.getElementById("play");
+        const reset = document.getElementById("reset");
+        let [hours, minutes, seconds] = [0, 0, 0];
+        let intervalId = null; // Declare a variable to store the interval ID
 
-    play.addEventListener("click", () => {
-       
-        intervalId = setInterval(() => {
-            startwatch();
-        }, 1000);
-    });
+        function startwatch() {
+            seconds++;
+            if (seconds === 60) {
+                seconds = 0;
+                minutes++;
+            }
+            if (minutes === 60) {
+                minutes = 0;
+                hours++;
+            }
+            let h = hours >= 10 ? hours : "0" + hours;
+            let m = minutes >= 10 ? minutes : "0" + minutes;
+            let s = seconds >= 10 ? seconds : "0" + seconds;
+            watch.innerHTML = h + ":" + m + ":" + s;
+        }
 
-    pause.addEventListener("click", () => {
-        clearInterval(intervalId);
-    });
-    reset.addEventListener("click",()=>{
-        clearInterval(intervalId);
-        seconds=0;
-        minutes=0;
-        hours=0;
-        watch.innerHTML = "00" + ":" + "00" + ":" + "00";
-    })
+        play.addEventListener("click", () => {
+            if (intervalId === null) {
+                intervalId = setInterval(startwatch, 1000);
+            }
+        });
 
+        pause.addEventListener("click", () => {
+            clearInterval(intervalId);
+            intervalId = null; // Reset the interval ID
+        });
 
-   </script>
+        reset.addEventListener("click", () => {
+            clearInterval(intervalId);
+            intervalId = null; // Reset the interval ID
+            seconds = 0;
+            minutes = 0;
+            hours = 0;
+            watch.innerHTML = "00:00:00";
+        });
+    </script>
+
 </body>
 </html>
